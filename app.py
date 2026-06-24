@@ -258,7 +258,7 @@ with tab1:
 
         # ── Bar chart return bulanan ───────────────────────────────────────────
         st.markdown("**📊 Return Bulanan (%)**")
-        monthly_close = close_s.resample("M").last()
+        monthly_close = close_s.resample("ME").last()
         monthly_return = monthly_close.pct_change() * 100
         monthly_return = monthly_return.dropna().tail(24)
         colors = [info["warna"] if v >= 0 else "#ef5350" for v in monthly_return.values]
