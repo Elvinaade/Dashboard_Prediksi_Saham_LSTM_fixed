@@ -1,9 +1,10 @@
 streamlit
+yfinance
+scikit-learn
 pandas
 numpy
-yfinance
+matplotlib
 plotly
-scikit-learn
+streamlit-option-menu
 keras
-jax
-jaxlib
+tf-keras
