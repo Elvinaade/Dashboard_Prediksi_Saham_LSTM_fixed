@@ -7,20 +7,12 @@ import plotly.express as px
 from plotly.subplots import make_subplots
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
-try:
-    # Keras 3 standalone (Python 3.12+, tidak butuh TensorFlow penuh)
-    import os
-    os.environ.setdefault("KERAS_BACKEND", "jax")  # jax lebih ringan; bisa diganti "torch"
-    from keras.models import Sequential
-    from keras.layers import LSTM, Dense, Dropout, BatchNormalization
-    from keras.callbacks import EarlyStopping, ReduceLROnPlateau
-    from keras.optimizers import Adam
-except ImportError:
-    # Fallback ke tensorflow.keras jika TensorFlow tersedia
-    from tensorflow.keras.models import Sequential
-    from tensorflow.keras.layers import LSTM, Dense, Dropout, BatchNormalization
-    from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau
-    from tensorflow.keras.optimizers import Adam
+import os
+os.environ["KERAS_BACKEND"] = "jax"  # Keras 3 standalone, tanpa TensorFlow
+from keras.models import Sequential
+from keras.layers import LSTM, Dense, Dropout, BatchNormalization
+from keras.callbacks import EarlyStopping, ReduceLROnPlateau
+from keras.optimizers import Adam
 import datetime
 import warnings
 warnings.filterwarnings("ignore")
