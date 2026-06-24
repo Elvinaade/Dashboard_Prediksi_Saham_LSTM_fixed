@@ -1,9 +1,10 @@
 streamlit
-   yfinance
-   tensorflow-cpu
-   scikit-learn
-   pandas
-   numpy
-   matplotlib
-   plotly
-   streamlit-option-menu
+yfinance
+scikit-learn
+pandas
+numpy
+matplotlib
+plotly
+streamlit-option-menu
+keras
+tf-keras
