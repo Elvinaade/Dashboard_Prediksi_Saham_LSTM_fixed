@@ -58,6 +58,9 @@ SAHAM = {
 @st.cache_data(ttl=3600)
 def ambil_data(ticker, start, end):
     df = yf.download(ticker, start=start, end=end, progress=False)
+    # Flatten MultiIndex columns (yfinance >= 0.2.18 mengembalikan MultiIndex)
+    if isinstance(df.columns, pd.MultiIndex):
+        df.columns = df.columns.get_level_values(0)
     df.dropna(inplace=True)
     return df
 
@@ -169,6 +172,8 @@ cols = st.columns(4)
 for i, (nm, info) in enumerate(SAHAM.items()):
     try:
         df_temp = yf.download(info["ticker"], period="5d", progress=False)
+        if isinstance(df_temp.columns, pd.MultiIndex):
+            df_temp.columns = df_temp.columns.get_level_values(0)
         harga_kini = float(df_temp["Close"].iloc[-1])
         harga_kemarin = float(df_temp["Close"].iloc[-2])
         delta = harga_kini - harga_kemarin
@@ -401,7 +406,7 @@ with tab4:
         bank_aktif = st.session_state.get("bank_aktif", bank_dipilih)
         info = SAHAM[bank_aktif]
         df_r = hasil["df"]
-        harga_terakhir = float(df_r["Close"].iloc[-1])
+        harga_terakhir = float(df_r["Close"].squeeze().iloc[-1])
 
         future_dates = pd.bdate_range(start=df_r.index[-1], periods=31)[1:]
         df_forecast = pd.DataFrame({"Tanggal": future_dates, "Prediksi Harga (Rp)": hasil["future"]})
